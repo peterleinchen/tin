@@ -29,10 +29,12 @@ An easy-to-use USENET news reader for the console using NNTP.
 It supports threading, scoring, different charsets, and many other
 useful things. It has also support for different languages.
 
+
 %package doc
 Summary:    Documentation, FAQ, and manuals for the tin news reader
 Group:      Documentation
 Requires:   %{name} = %{version}-%{release}
+
 
 %description doc
 This package contains the text manuals, comprehensive FAQ logs, sample layouts, 
@@ -98,6 +100,10 @@ cp faq/* %{buildroot}/%{faqdir}/
 %{_bindir}/*
 %{_datadir}/locale/*/LC_MESSAGES/*.mo
 %doc README
+%dir %{_datadir}/%{name}-%{version}
+%dir %{faqdir}
+%{faqdir}/*
+
 
 %files doc
 %defattr(-,root,root,-)
@@ -112,12 +118,9 @@ cp faq/* %{buildroot}/%{faqdir}/
 %doc doc/article.txt doc/art_handling.txt doc/internals.txt doc/rcvars.txt
 %doc doc/config-anomalies doc/nov_tests doc/DEBUG_REFS
 %doc doc/CREDITS
-%dir %{_datadir}/%{name}-%{version}
-%dir %{faqdir}
-%{faqdir}/*
 
 
-%post doc
+%post
 # Inside post, pre, preun, postun scriptlets, comments do NOT protect macro expansion. And escaping with double PERCENT does also not work.
 # { [ -d /home/nemo ] && ln -sf PERCENT{faqdir} /home/nemo/Documents/tin.faq; } || { [ -d /home/defaultuser ] && ln -sf PERCENT{faqdir} /home/defaultuser/Documents/tin.faq; }
 if [ -d /home/nemo ]; then
@@ -127,7 +130,7 @@ elif [ -d /home/defaultuser ]; then
 fi
 
 
-%preun doc
+%preun
 if [ "$1" -eq 0 ]; then
     # { [ -L /home/nemo/Documents/tin.faq ] && rm /home/nemo/Documents/tin.faq; } || { [ -L /home/defaultuser/Documents/tin.faq ] && rm /home/defaultuser/Documents/tin.faq; }
     if [ -L /home/nemo/Documents/tin.faq ]; then
