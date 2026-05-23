@@ -1,9 +1,12 @@
 <services>
+
   <service name="tar_git">
     <param name="url">https://github.com/peterleinchen/tin.git</param>
     <param name="revision">v2.6.5</param>
     <param name="debian"></param>
     <param name="dumb">N</param>
   </service>
-  <service name"download_files"/>
+
+  <service name="download_files"/>
+
 </services>
