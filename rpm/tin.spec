@@ -4,8 +4,9 @@ Version: 2.6.5
 Release: 1
 License: BSD
 Group: Applications/News
-Source: ftp://ftp.tin.org/pub/news/clients/tin/v2.6/%{name}-%{version}.tar.bz2
-##BuildRoot: %%{name}-%%{version}-%%{release}
+Source0: ftp://ftp.tin.org/pub/news/clients/tin/v2.6/%{name}-%{version}.tar.bz2
+## Source1: https://github.com/peterleinchen/tin.git
+## BuildRoot: %%{name}-%%{version}-%%{release}
 #Packager: Dirk Nimmich <nimmich@muenster.de>
 Packager: Peter Leinchen (for SFOS) <peterleinchen@t-online.de>
 
