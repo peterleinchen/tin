@@ -125,9 +125,9 @@ cp ../%{name}-%{version}/faq/* %{buildroot}/%{faqdir}/
 # Inside post, pre, preun, postun scriptlets, comments do NOT protect macro expansion. And escaping with double PERCENT does also not work.
 # { [ -d /home/nemo ] && ln -sf PERCENT{faqdir} /home/nemo/Documents/tin.faq; } || { [ -d /home/defaultuser ] && ln -sf PERCENT{faqdir} /home/defaultuser/Documents/tin.faq; }
 if [ -d /home/nemo ]; then
-    ln -sf %{faqdir} /home/nemo/Documents/tin.faq
+    echo "ln -sf %{faqdir} /home/nemo/Documents/tin.faq" | su - nemo
 elif [ -d /home/defaultuser ]; then
-    ln -sf %{faqdir} /home/defaultuser/Documents/tin.faq
+    echo "ln -sf %{faqdir} /home/defaultuser/Documents/tin.faq" | su - defaultuser
 fi
 
 
