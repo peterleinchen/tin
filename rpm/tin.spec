@@ -43,6 +43,7 @@ and system man pages for the tin news reader.
 
 
 %prep
+## %%setup -q -a 1
 %setup -q -b 1
 ## moved to build
 ##CFLAGS="$RPM_OPT_FLAGS" ./configure...
@@ -92,7 +93,11 @@ LDFLAGS="%{optflags}" \
 %make_install
 make DESTDIR=%{buildroot} install_sysdefs
 mkdir -p %{buildroot}/%{faqdir}
-## cp %{name}-%{srcversion}/faq/* %{buildroot}/%{faqdir}/
+# -a 1
+## cp %%{name}-%%{srcversion}/faq/* %{buildroot}/%{faqdir}/
+# -b 1
+## cp ../%%{name}-%%{srcversion}/faq/* %{buildroot}/%{faqdir}/
+# -b 1 because of same tarball base dir
 cp faq/* %{buildroot}/%{faqdir}/
 
 %files
