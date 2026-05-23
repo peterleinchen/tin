@@ -1,0 +1,569 @@
+-- 2.6.5 release 20251224 "Glenury" --
+
+ 030) Thomas E. Dickey <dickey@invisible-island.net>
+      ADD. update configure macros
+      FIX. aclocal.m4
+
+ 029) Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>
+      ADD. Romanian translation
+      FIX. ro.po
+
+ 028) Bjarni Ingi Gislason <bjarniig@simnet.is>
+      ADD. manpage fixes (debian bug #1093395, #1096177)
+      FIX. tin.[15]
+
+ 027) Dennis Preiser <dennis@d--p.de>
+      ADD. avoid macro in snprintf() as that might be a macro too
+      ADD. fallback code for the !CPP_DOES_CONCAT case
+      ADD. plural forms
+      ADD. prefer MIME filename*-parameter over filename-parameter
+      ADD. if a MIME filename parameter is empty after path removal fallback
+           to the next filename parameter if available.
+      ADD. PageToggleVerbatim (,)
+      ADD. validate undeclared_charset in 'M'enu
+      ADD. extend verbatim_handling options
+      ADD. ignore col_invers_bg == col_invers_fg == -1
+      ADD. page_yenc_format
+      ADD. per scope hide_inline_data via attributes
+      ADD. cleanup draw_page_header(), fmt_option_prompt()
+      ADD. color the color-menu items while selecting the color
+      ADD. serverrc-menu via ConfigServerrcMenu ('s')
+      ADD. per scope getart_limit via attributes
+      ADD. indicators in scopes menu to show which scopes do match
+           the current group (scope_marked_global_match,
+           scope_marked_local_match)
+      ADD. make the mark in scopes menu for global/local scopes
+           configurable (scope_marked_global, scope_marked_local)
+      BUG. -L/'L' did depend on sort_article_type/sort_threads_type
+           and failed for some combinations
+      BUG. possible memleaks
+      BUG. layout issue with multibyte chars on posting history screen
+      BUG. IGNORE_ART() macro didn't honor kill_level == KILL_THREAD
+      BUG. possible buffer overflow with -C
+      FIX. active.c, art.c, attrib.c, charset.c, color.c, config.c, cook.c
+           curses.c, feed.c, filter.c, global.c, group.c, header.c, help.c
+           init.c, keymap.c, lang.c, main.c, makecfg.c, memory.c, misc.c
+           nntplib.c, options_menu.c, page.c, post.c, prompt.c, refs.c
+           rfc2045.c, rfc2046.c, rfc2047.c, save.c, search.c, select.c
+           signal.c, string.c, tcurses.c, thread.c, xref.c, extern.h, keymap.h
+           proto.h, rfc2046.h, tin.h, tinrc.h, tincfg.tbl, tin.[15]
+
+ 026) Urs Janssen <urs@tin.org>
+      ADD. avoid bison warning
+      ADD. use ngettext(3) for plural-forms
+      ADD. avoid "install -D"
+      ADD. --with-url-normalization[=[uriparser,curl] (default: yes)
+           check for liburiparser or libcurl for URL normalization
+      ADD. if reading via NNTP Message-ID 'L'ookup in group-, thread- and
+           page level now try to find the ID via NNTP if the ID is not in
+           the current group
+      ADD. adjust IPv6 part of URL_REGEX
+      ADD. do not check for libgsasl but zlib if not using NNTP
+      ADD. move setlocale in write_overview() out of the loop
+      ADD. reject invalid undeclared_charset in attributes
+      ADD. if cache_overview_files is set, keep raw Subject and From
+           data so the cache is build with the original data instead
+           of trying recompile it from our preprocessed data.
+      ADD. hash Path in overview-data
+      ADD. Xref- and Path-filter to filter-menu
+      ADD. ToggleInfoLastLine ('i') to OptionMenu ('M')
+      ADD. ConnectionInfo ('J') to OptionMenu ('M') and PageViewAttach ('V')
+      ADD. configure check for getsockopt(), setsockopt(), posix_close(),
+           realpath(), lstat(), strptime(), sig_atomic_t, volatile
+      ADD. set TCP_USER_TIMEOUT or TCP_CONNECTIONTIMEOUT and
+           TCP_RXT_CONNDROPTIME if available
+      ADD. use truncate/append for .oldnewsrc (debian bug #151113)
+      ADD. detect "begin-encoded" as start of an uuencoded file with
+           a base64 encoed filename.
+      ADD. hide_inline_data (was hide_uue) now also can hide (partial) yenc,
+           inline pgp and shar
+      ADD. crc32()-fallback from Gary S. Brown
+      ADD. hideline_regex tinrc/'M'enu option similar to trn4 $HIDELINE
+      ADD. merge is_art_tex_encoded() into process_text_body_part()
+      ADD. ALPN with TLS (RFC 7301)
+      ADD. add_cmd_line_opts and disabled_nntp_cmds to serverrc, the later
+           must be used to replace the now dropped --disable-xhdr-xref and
+           --enable-broken-listgroup-fix configure options
+      ADD. cache_overview_files and compress_overview_files to serverrc
+      ADD. nntp_pipeline_limit to serverrc (DISABLE_PIPELINING replacement)
+      ADD. keep_expired_filters to keep expired rules (debian bug #1109039)
+      ADD. -n cmd.line.grp now also allows to specify a group not present in
+           newsrc yet (same for -nw)
+      ADD. 'g'oto group now works with -n even if group is not present in
+           newsrc
+      ADD. -L/'L'ookup Message-ID now works with -n even if Message-ID is in
+           a group not present in newsrc.
+      ADD. 'S'ubscribe pattern with -n may now work for groups not in newsrc
+           yet (local spool with active file and/or RFC 3977 server only)
+      ADD. config.guess, config.sub update
+      ADD. lower 8bit check for Newsgroups, Followup-To and Distribution
+           from error to warning
+      ADD. prefer Xref- over Newsgroups-header if performing Message-ID
+           lookups via NNTP
+      ADD. lookup "DISTRIB.PATS" and use as default for Distribution
+      ADD. lookup "DISTRIBUTIONS" descriptions and display if available
+      ADD. evaluate To/Cc/Bcc in mailing_list-groups (debian bug #250317)
+      ADD. cache connectioninfo and help pages during session once created
+      ADD. show group-flag on check article page
+      ADD. warn about moderated groups on check article page
+      ADD. print expected file versions with -vvV
+      ADD. MarkAncientArtRead ('^E') to mark old articles as read in select-
+           and group-level
+      ADD. improve -u performance
+      BUG. do not validated news_regex URIs with libcurl/liburiparser
+      BUG. in NO_LOCALE config get_author() could write outside the
+           allocated screen-memory
+      BUG. positive getart_limit had several bugs
+      BUG. -F was not mentioned in -h
+      BUG. mixed up error-messages
+      BUG. missing checks for empty string in From
+      BUG. possible memleaks
+      BUG. "posting" to mailgroups (mailing_list=) wasn't allowed if the
+           group had one of the [jnx]-flags, and the moderated warning
+           was given if it had the m-flag.
+      BUG. double-free group-name on a 502 response to GROUP
+      REM. ISO2ASC=6 (CP437) table
+      REM. configure check for atoi()
+      FIX. active.c, art.c, attrib.c, auth.c, charset.c, config.c, cook.c
+           crc32.c, debug.c, feed.c, filter.c, getline.c, group.c, header.c
+           help.c, init.c, keymap.c, lang.c, mail.c, main.c, makecfg.c
+           memory.c, misc.c, newsrc.c, nntplib.c, nntps.c, nrctbl.c
+           options_menu.c, page.c, pgp.c, post.c, prompt.c, regex.c, rfc1524.c
+           rfc2045.c, rfc2047.c, save.c, screen.c, search.c, select.c, signal.c
+           string.c, tags.c, thread.c, xref.c, extern.h, keymap.h, nntplib.h
+           policy.h, proto.h, rfc2046.h, tin.h, tinrc.h, parsdate.y
+           autoconf.h[in], tincfg.tbl, Makefile[.in], configure[.in]
+           config.guess, config.sub, tin.[15]
+
+ 025) Toomas Soome <tsoome@me.com>
+      ADD. updated Estonian translation
+      FIX. et.po
+
+-- 2.6.4 release 20241224 "Helmsdale" --
+
+ 024) Bjarni Ingi Gislason <bjarniig@simnet.is>
+      ADD. manpage fixes (debian bug #1089489)
+      FIX. tin.1
+
+ 023) Thomas E. Dickey <dickey@invisible-island.net>
+      REM. bundled-intl stuff
+      ADD. disallow giving both --with-socks and --with-socks5
+      ADD. try also libsocks5 and libsocksd if using --with-socks5
+      FIX. intl/*, aclocal.m4, configure[.in], autoconf.hin, nntplib.h
+           tcurses.h, Makefile[.in], conf-tin
+
+ 022) Enrik Berkhan <enrik@tin.org>
+      ADD. avoid implicit conversion
+      FIX. curses.c, misc.c, nntplib.c, rfc2047.c
+
+ 021) Matt Anton <tin@lv223.org>
+      ADD. updated French translation
+      FIX. fr.po
+
+ 020) Dennis Preiser <dennis@d--p.de>
+      ADD. ArticleInfo-page ('\'')
+      ADD. always cast arg to is*()-functions to unsigned char
+      ADD. avoid implicit conversion
+      ADD. formatted output for -vZ and large article counts
+      ADD. avoid malloc()/free() overhead in match_group_list()
+      ADD. dont_break_words tinrc option, if set don't break long
+           lines inside words, just on SPACE or TAB if possible.
+      ADD. charset guessing via undeclared_cs_guess in attributes
+      ADD. syntax check for content subtype
+      ADD. handle multiple addresses in From, Reply-To, Approved
+      ADD. addresses in %T are now separated by comma instead of space
+      ADD. no longer use fixed length buffers in t_cmdlineopts
+      ADD. limit tinrc/attributes value strings to 1022 chars
+           (they were "randomly" cut off before around 1k)
+      ADD. avoid fixed length buffers in t_config, t_filter_rule and
+           t_fmt
+      ADD. "ternary"-operator to format-strings %F, %s, %T
+      ADD. max screenwidth ('<') condition to format-strings
+      ADD. avoid fixed length buffer for lines on terminal when using curses
+      ADD. reorder t_config to avoid padding
+      REM. MAX_MSG_HEADERS limitation
+      BUG. txt_help_config_search_opt_forwards,
+           txt_help_config_search_opt_forwards and
+           txt_help_attrib_search_opt_backwards,
+           txt_help_attrib_search_opt_forwards were mixed up
+      BUG. memleak when using bsd-sockets without getservbyname()
+      BUG. possible memleak on quit in version.c:upgrade_prompt_quit()
+      BUG. multiple addresses in From, Reply-To, Approved (allowed since
+           RFC 5536) we're not handled correct.
+      FIX. active.c, art.c, attrib.c, charset.c, config.c, cook.c, debug.c
+           feed.c, filter.c, getline.c, group.c, header.c, help.c, inews.c
+           init.c, keymap.c, lang.c, main.c, mail.c, makecfg.c, memory.c
+           misc.c, nntplib.c, nntps.c, options_menu.c, page.c, pgp.c, post.c
+           prompt.c, refs.c, regex.c, rfc2046.c, rfc2047.c, save.c, screen.c
+           search.c, select.c, sigfile.c, signal.c, string.c, tags.c, thread.c
+           version.c, xref.c, parsdate.y, extern.h, keymap.h, newsrc.h, proto.h
+           rfc2046.h, tin.h, tinrc.h, tincfg.tbl, tin.1, tin.5
+
+ 019) Urs Janssen <urs@tin.org>
+      ADD. silence some unused parameter warnings
+      ADD. avoid sscanf(3) in check_upgrade()
+      ADD. avoid fixed length buffer in my_mktmp()
+      ADD. configure check for buggy snprintf(3)
+      ADD. changed snprintf(3) fallback implementation from Patrick Powell
+           to the one by Mark Martinec
+      ADD. use snprintf(3) in STRCPY macro
+      ADD. config.guess, config.sub update
+      ADD. avoid tmpfile(3) usage
+      ADD. configure check for blockable signal-type (POSIX, BSD, SYSV, NONE)
+      ADD. configure check for tiuser.h (TLI; SVR3, SVR4)
+      ADD. configure check for arc4random_uniform(3), lrand48(3) and random(3)
+           prefer over rand(3)
+      ADD. configure check for tcflag_t
+      ADD. configure check for PRIdLEAST64 and SCNdLEAST64
+      ADD. configure check for ucsdet_detect() from libicui18n
+      ADD. configure check for getpeername()
+      ADD. configure check for uconv_open() and unicode/ucnv.h
+      ADD. configure check for liburiparser
+      ADD. configure check for libidn2
+      ADD. simplify _Noreturn check, just note the C11 standard
+      REM. configure check for varargs.h
+      ADD. removed fixed buffer from copy_body()
+      ADD. SASL info to connection-info ('J')
+      ADD. -L cmd.line switch
+      ADD. create missing newsrc-dir
+      ADD. -g "[ipv6::address]"[:port] also in .newsauth and newsrctable
+      ADD. check that a recipient is present in mailgroups
+      ADD. mention location of files being read on startup
+      ADD. only display MOTD on startup if it did change since the last
+           connect (use 'J' to see it anyway).
+      ADD. cache MOTD during session
+      ADD. REPRODUCIBLE_BUILD define to prevent recoding of __DATE__, __TIME__,
+           $CFLAGS, $CPPFLAGS and $LDFLAGS in the binary if set
+      ADD. disallow Distribution: all, warn about Distribution: world
+      ADD. charset guessing via undeclared_cs_guess in attributes
+      ADD. disallow set but empty $NAME or $REALNAME to prevent reading
+           the users name from /etc/passwd
+      ADD. expand tabs in multiline wait_messages
+      ADD. calculate offset to article body for postponed articles
+      ADD. UNICODE-1-1, SCSU, csSCSU to unsupported charsets
+      ADD. try charset conversion with ICU ucnv_* if iconv() fails or is
+           not available.
+      ADD. use gmtime() and 4 digigt year for NEWGROUP on RFC 3977 servers
+           instead of localtime and 2 digigt year
+      ADD. basic (no custom-messages) $MAILPATH support
+      ADD. skip reading attributes with -Z
+      ADD. skip reading filter-file with -u
+      ADD. warn about -u[owXzZ] and -o[SZ] -R[ACcgkLSTZ] -XS (useless
+           combinations)
+      ADD. mention $TINRC value in useless combination message
+      ADD. create INDEX_LOCK (used by 'u') in ${TIN_HOMEDIR:-"$HOME"}/.tin
+           instead of $TMPDIR
+      ADD. if reading from local spool, try to read inn >= 2.3 nov-files
+           in case reading traditional nov-files failed
+      ADD. allow argument names for -D (case insensitive, comma separated
+           list).
+      ADD. URI syntax-check and normalization it with uriNormalizeSyntaxA() if
+           liburiparser was found
+      ADD. $LC_NUMERIC for RADIXCHAR (used when showing attachment sizes)
+      ADD. allow valid IPv6-addresses in brackets in gnksa-filters
+           (requires that the system has inet_pton() and knows AF_INET6)
+      ADD. allow ccTLD .ss, disallow ccTLD .an and .tp
+      ADD. updated the gTLD list (needs disable_gnksa_domain_check=ON in
+           tin.defaults)
+      ADD. -F filter-file cmd.-line option
+      ADD. warn on "Re:"/"Re: " only Subject
+      ADD. allow hex-numbers for cmd.-line switches which take numeric args
+      ADD. %C, %F, %P, %k, %l, %s, %u to strftime(3)-fallback
+      ADD. compress_overview_files tinrc-option
+      REM. tmpfile.c
+      REM. --with-sum specifying the sum of uue-file got more and more
+           uncommon at the end of last century and uue mostly vanished
+           laster on ...
+      REM. %G, %P expansion in $MAILCAPS
+      BUG. AUTHINFO SASL * didn't check possible 283 return code
+           (as we do not support anything but SASL PLAIN yet, not an issue)
+      BUG. -t not mentioned in -h
+      BUG. malloc(3)- and fopen(3)-leaks on error exits
+      BUG. didn't remove '.' from normalized charset when looking for a
+           keymap-file
+      BUG. socket(3)-leak on early exit due to TLS-errors
+      BUG. possible NULL-pointer dereference in connection-info ('J') if
+           CAPABILITIES does not return IMPLEMENTATION
+      BUG. wrong sign for shown default kill-score value in kill-menu
+      BUG. art_mark_xref_read() didn't allow '\t' between locations
+      BUG. a From longer than > cCOLS wasn't properly truncated
+           before appending organitazion in the pager
+      BUG. may truncate format string instead of result in draw_page_header
+      BUG. -X did not disallow EditFilter and -S
+      BUG. -o did not read keymap-file but it may ask questions so it should.
+      BUG. -vD NTTP didn't log full LISTGROUP responses
+      FIX. active.c, art.c, attrib.c, auth.c, charset.c, config.c, cook.c
+           curses.c, debug.c, feed.c, filter.c, getline.c, global.c, group.c
+           header.c, help.c, inews.c, init.c, keymap.c, lang.c, list.c, lock.c
+           mail.c, main.c, makecfg.c, memory.c, mimetypes.c, misc.c
+           my_tmpfile.c, newsrc.c, nntplib.c, nntps.c, nrctbl.c, options_menu.c
+           page.c, pgp.c, post.c, prompt.c, read.c, refs.c, regex.c, rfc1524.c
+           rfc2046.c, rfc2047.c, save.c, screen.c, search.c, select.c
+           sigfile.c, signal.c, snprintf.c, string.c, tags.c, tcurses.c
+           thread.c, version.c, xface.c, xref.c, parsdate.y, debug.h, extern.h
+           nntplib.h, policy.h, proto.h, snprintf.h, tin.h, tinrc.h, tnntp.h
+           tincfg.tbl, autoconf.h[in], configure[.in], Makefile[.in]
+           config.guess, config.sub, tin.1, tin.5
+
+-- 2.6.3 release 20231224 "Banff" --
+
+ 018) Florian Weimer <fweimer@redhat.com>
+      ADD. fix incompatible pointer types
+      FIX. aclocal.m4, configure.[in]
+
+ 017) Enrik Berkhan <enrik@tin.org>
+      ADD. "COMPRESS DEFLATE" support (RFC 8054)
+      ADD. ensure that no TLS implementation can activate compression
+      ADD. some more error messages for various TLS issues
+      ADD. don't use tls_default_ca_cert_file(3) due to a behavioural
+           difference between libretls and libressl
+      BUG. typo in configure[.in]
+      FIX. init.c, main.c, misc.c, nntplib.c, nntps.c, extern.h, autoconf.hin
+           aclocal.m4, configure[.in]
+
+ 016) Dennis Grevenstein <dennis.grevenstein@gmail.com>
+      ADD. EXIT_*-fallback for NEWS-OS 3.3
+      FIX. makecfg.c
+
+ 015) Dennis Preiser <dennis@d--p.de>
+      ADD. do not interpret \n in editor_format
+      ADD. mime encode long header-lines (> 998 octets) if !post_8bit_header
+           and warn about long unbroken header-lines otherwise
+      ADD. configurable display format of attachments
+           (page_mime_format, page_uue_format, attachment_format)
+      ADD. new options show_art_score, col_score_neg, col_score_pos
+      ADD. avoid fopen(3)/fclose(3) overhead in subscribe_pattern()
+      ADD. allow up to 64k long lines in posted_info_file
+      ADD. make -vZ less verbose (skip Reading messages)
+           current output now available via -vvZ
+      ADD. move strings to lang.c
+      ADD. silence some compiler warnings
+      ADD. unset of ranges
+      ADD. display umlauts in ssl-certs with OpenSSL and GnuTLS and LibreSSL
+           if also lybcrypto is available
+      BUG. tls_peer_cert_notbefore(3)/tls_peer_cert_notafter(3) used with
+           LibreSSL without crypto-lib (from OpenSSL) returns time in UTC
+           not localtime
+      BUG. with several consecutive soft hyphens, every second one is
+           displayed despite suppress_soft_hyphens=ON
+      BUG. -vZ output was ugly due to one missing and one superfluous newline
+      BUG. tagging articles in group and thread level may grabble the
+           screen after reading them and returning to that level if
+           art_mark_width = 1
+      BUG. crafting a f'up to a non existent group lead to a crash
+      BUG. changing hide_uue via 'M'enu in pager missed to recook
+           the article
+      REM. show_info from manuals, unused t_filter->next
+      BUG. fix the memleak in read_cmd_line_options(envargs()) if $TINRC is
+           set
+      BUG. -I$srcdir/libcanlock/include missing in CHECK_DECL_FLAG
+      FIX. active.c, art.c, attrib.c, color.c, config.c, cook.c, filter.c
+           group.c, inews.c, init.c, keymap.c, lang.c, main.c, misc.c, newsrc.c
+           nntplib.c, nntps.c, nrctbl.c, options_menu.c, page.c, pgp.c, post.c
+           read.c, refs.c, rfc2046.c, rfc2047.c, save.c, select.c, signal.c
+           tags.c, thread.c, xface.c, extern.h, proto.h, tin.h, tinrc.h
+           tnntps.h, tincfg.tbl, tin.[15], configure[.in]
+
+ 014) Matt Anton <tin@lv223.org>
+      ADD. updated French translation
+      FIX. fr.po
+
+ 013) Urs Janssen <urs@tin.org>
+      BUG. "\x" sequences (x != '\0', 'n') in editor_format got
+           replaced by "%x"
+      BUG. verification_func undefined with HAVE_LIB_GNUTLS but without DEBUG
+      BUG. missing HAVE_MEMMOVE / HAVE_BCOPY guards in nntplib.c
+      BUG. without including tin.h we can no longer use _Noreturn in makecfg.c
+      BUG. txt_translit was included in binary without HAVE_ICONV
+      BUG. timeout counter was not reset on reconnect
+      BUG. fix uncritical TOCTOU issue in read_newsrc() and
+           open_save_filename()
+      BUG. use of potentially uninitialized this_resp instead of respnum
+           in strfquote() when calling my_strftime()
+      BUG. an unknown Content-Transfer-Encoding was correctly treated as
+           binary but without updating Content-Type to
+           application/octet-stream (RFC2045 6.4)
+      ADD. disallow headers without a name or a name start starts with a dot
+           when posting
+      ADD. -[zZMN] now note unsubscribed cmd-line groups
+      ADD. replace stpwatch.h macros avoiding ftime()
+      ADD. do not resend HEAD after ERR_GOODBYE response
+      ADD. config.guess, config.sub update
+      ADD. version checking during configure for SSL/TLS libraries
+      ADD. log end of long multiline responses with -D 1 when not using -v
+           (for timestamps)
+      ADD. reformat code, remove unnecessary assignments and parameters,
+           remove DIRSEP, avoid implicit double negative
+      ADD. :port suffix in newsauth, newsrctable and -g
+      ADD. cmd. execution via ! for x_body
+      ADD. missing fchmod fallback code to write_overview()
+      ADD. only log sensitive auth data if running verbose (-vD 1)
+      ADD. warn if body contains non printable chars in current locale
+      ADD. speedup str_trim(), refine valid_msgid()
+      ADD. -t timeout cmd.-line option
+      ADD. -vvN / -vvM writes the skipped groups (unset batch_save) to the log
+      ADD. allow ISO8859* (without hyphen) as mm_charset in
+           my_isprint()-fallback when compiling with -DNO_LOCALE
+      ADD. validate_charset() if charset name is read from an article
+      ADD. show score in "-D 2" filter output if != 0 (instead of only for
+           killed articles)
+      ADD. add 'f' / 'F' (post a followup (without quotes)) to thread menu
+      ADD. add Content-Language (RFC 3282) evaluation (pager only)
+      ADD. GLOBAL_TOGGLE_COLOR ('&') to info-pager (help-page ('h'),
+           connection-info ('J') and menu ('M')), posting-history ('W') and
+           url-menu ('U')
+      ADD. GLOBAL_VERSION ('v') to attachment-menu ('V'), posting-history
+           ('W') and url-menu ('U')
+      ADD. GLOBAL_TOGGLE_INVERSE_VIDEO ('I') to url-menu ('U') and
+           posting-history ('W')
+      ADD. make date-parsing more fault tolerant
+      ADD. quit early if rcdir doesn't exist and can't be created
+      ADD. init backup_article_name just one
+      ADD. MOTD to connection-info ('J')
+      ADD. configure check for libcrypto when using LibreSSL
+      FIX. active.c, art.c, auth.c, config.c, cook.c, debug.c, feed.c, filter.c
+           group.c, header.c, heapsort.c, help.c, init.c, keymap.c, lang.c
+           mail.c, main.c, makecfg.c, memory.c, misc.c, newsrc.c, nntplib.c
+           nntps.c, options_menu.c, page.c, pgp.c, post.c, refs.c, rfc2045.c
+           rfc2046.c, rfc2047.c, save.c, screen.c, search.c, select.c, signal.c
+           string.c, tcurses.c, thread.c, tmpfile.c, xface.c, parsdate.y
+           autoconf.h[in], extern.h, keymap.h, proto.h, rfc2046.h, tin.h
+           tinrc.h, tin.1, tin.5, Makefile[.in], configure[.in], config.guess
+           config.sub
+
+ 012) Thomas E. Dickey <dickey@invisible-island.net>
+      BUG. HAVE_LIBINTL_H may get set even when unavailable
+      ADD. remove tin.h dependency from makecfg.c
+      ADD. update configure macros
+      ADD. simplify code
+      FIX. aclocal.m4, configure[.in], canlock.c, makecfg.c, Makefile.in
+
+ 011) Brad Littlejohn <tyketto@sbcglobal.net>
+      Urs Janssen <urs@tin.org>
+      BUG. still using dropped alias s_close() instead of close() in some
+           code path (i.e. without ENABLE_IPV6 and/or with DECNET).
+      FIX. nntplib.c
+
+ 010) Toomas Soome <tsoome@me.com>
+      ADD. updated Estonian translation
+      FIX. et.po
+
+-- 2.6.2 release 20221224 "Pittyvaich" --
+
+ 009) Florian Weimer <fweimer@redhat.com>
+      Thomas E. Dickey <dickey@invisible-island.net>
+      ADD. missing #include directives to improve C99 compatibility
+      FIX. aclocal.m4, configure
+
+ 008) Enrik Berkhan <enrik@tin.org>
+      BUG. remove alleged Y2K38 safety issues
+      ADD. ~ and $VAR expansion to tinrc option tls_ca_cert_file
+      ADD. simplify code and refactor to fix an unused variable complaint
+      ADD. pcre2 support (debian bug #999941, fedora bug #2128388)
+      ADD. NNTPS support based on libressl/GNUttls/OpenSSL (RFC 8143)
+      ADD. TLS connection info
+      ADD. switch from stdio to own buffer implementation
+      FIX. config.c, cook.c, feed.c, filter.c, group.c, init.c, lang.c, main.c
+           memory.c, misc.c, nntplib.c, nntps.c, options_menu.c, page.c, read.c
+           regex.c, save.c, screen.c, search.c, select.c, wildmat.c
+           autoconf.h[in], extern.h, nntplib.h, proto.h, tinrc.h, tin.h
+           tnntp.h, tnntps.h, tincfg.tbl, parsdate.y, configure[.in]
+           Makefile[.in], tin.1
+
+ 007) Dennis Preiser <dennis@d--p.de>
+      BUG. backward search for a non empty line got stuck in endless loop
+      BUG. reading a faulty mime article via NNTP could hang tin
+           (debian bug #1005024)
+      BUG. a long group name isn't shortened appropriately in group level
+      BUG. config changes via 'M'enu were not immediately active for
+           show_signatures, verbatim_handling, tex2iso_conf and
+           trim_article_body
+      BUG. after posting an article from selection or group level the cursor
+           remains visible in the lower left corner
+      ADD. tinrc.show_help_mail_sign
+      ADD. get $TMPDIR just once
+      ADD. option to remove SOFT HYPHENs (U+00AD) from non verbatim blocks of
+           articles in UTF-8 and using a UTF-8 locale
+      BUG. show actual help-key in txt_type_h_for_help
+      FIX. config.c, cook.c, debug.c, filter.c, group.c, init.c, lang.c, mail.c
+           misc.c, my_tmpfile.c, newsrc.c, options_menu.c, page.c, pgp.c
+           regex.c, rfc2046.c, refs.c, save.c, screen.c, search.c, select.c
+           thread.c, extern.h, proto.h, tin.h, tinrc.h, tincfg.tbl, tin.1
+           tin.5
+
+ 006) Thomas E. Dickey <dickey@invisible-island.net>
+      BUG. configure --with-included-gettext was non-functional since tin 2.4.2
+      ADD. update configure macros
+      FIX. aclocal.m4, intl/Makefile.in, intl/plural.c
+
+ 005) Urs Janssen <urs@tin.org>
+      ADD. config.guess, config.sub update
+      ADD. code cleanup; remove redundant condition and unused var;
+           add some missing casts and _Noreturn
+      ADD. ignore set but empty env.-vars
+      ADD. try harder when looking for keymap-file, try locale "suffixes"
+           from language[_territory[.codeset]][@modifier] with parts
+           stripped off in order: codeset, normalized codeset, territory,
+           modifier
+      ADD. guard against empty inews_prog and empty mm_charset in
+           !CHARSET_CONVERSION case
+      ADD. warn about some more nonsensical cmd.-line option combinations
+           -ow|-oz|-wz
+      ADD. exit early at -o when there are no postponed articles
+      ADD. reduce memory usage for xface
+      ADD. list of leap years from 2040 to 2068
+      ADD. restrict URL_REGEX to disallow non ascii chars in path
+      ADD. accept active file lines even without moderation flag
+      ADD. do not try NEXT again after an ERR_COMMAND response
+      ADD. ConnectionInfo page ('J')
+      ADD. update tin_atol() to new SI prefix names Ronna and Quetta
+      ADD. experimental MAXARTNUM extension
+      BUG. missing default tinrc.editor_format on first start
+      BUG. typo in man page
+      BUG. possible memleak in check_article_to_be_posted if article has
+           multiple To:, Followup-To: or Newsgroups:-headers
+      BUG. possible buffer overflow in find_reply_to_addr
+      BUG. f'up to an article without a message-id (possible in mailgroups)
+           crashes
+      BUG. hypothetic missing string termination
+      BUG. need to convert utf8pass to network charset unconditionally in
+           do_authinfo_sasl_plain
+      FIX. active.c, art.c, auth.c, config.c, filter.c, group.c, help.c
+           inews.c, init.c, keymap.c, lang.c, main.c, makecfg.c, mimetypes.c
+           misc.c, nntplib.c, options_menu.c, page.c, post.c, pgp.c, rfc1524.c
+           rfc2046.c, save.c, select.c, signal.c, string.c, thread.c, wildmat.c
+           xface.c, parsdate.y, extern.h, keymap.h, nntplib.h, proto.h, tin.h
+           tin.1, tin.5, config.guess, config.sub, configure[.in]
+
+-- 2.6.1 release 20211226 "Convalmore" --
+
+ 004) Michael Baeuerle <michael.baeuerle@stz-e.de>
+      BUG. wrong pkg-config file name for libcanlock3
+      FIX. aclocal.m4
+
+ 003) Urs Janssen <urs@tin.org>
+      ADD. config.guess, config.sub update
+      ADD. don't count comment and empty lines in newsrc-file
+      ADD. fixed mixed declarations and code
+      ADD. const qualification for free_if_not_default() and strfpath_cp()
+      ADD. allow to cancel wait_message() via key press
+      BUG. missing bounds checking in *highlight_string()
+      BUG. use of wint_t in !MULTIBYTE_ABLE code
+      FIX. curses.c, help.c, memory.c, misc.c, newsrc.c, page.c, prompt.c
+           rfc2046.c, screen.c, select.c, tcurses.c, extern.h, tin.5
+           config.guess, config.sub
+
+ 002) Thomas E. Dickey <dickey@invisible-island.net>
+      BUG. missing configure check for get_wch and wget_wch
+      ADD. workaround for possible redefinition of bool type when using
+           pdcurses
+      FIX. autoconf.hin, tcurses.h, tin.h, Makefile.in, aclocal.m4
+           configure[.in]
+
+ 001) Matt Anton <tin@lv223.org>
+      ADD. updated French translation
+      FIX. fr.po
+
+-- 2.6.0 release 20210823 "Coleburn" --
+
+For changes made till the 2.6.0 release look at CHANGES.old
