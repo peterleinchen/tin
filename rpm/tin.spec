@@ -42,7 +42,7 @@ and system man pages for the tin news reader.
 
 
 %prep
-%setup -q
+%setup -q -b 1
 ## moved to build
 ##CFLAGS="$RPM_OPT_FLAGS" ./configure...
 
