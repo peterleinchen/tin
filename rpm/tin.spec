@@ -6,7 +6,7 @@ Release: 1
 License: BSD
 Group: Applications/News
 Source0: ftp://ftp.tin.org/pub/news/clients/tin/v2.6/%{name}-%{srcversion}.tar.bz2
-Source1: %{name}-%{version}.tar.bz2
+Source1: %{name}-%{srcversion}.tar.bz2
 ## BuildRoot: %%{name}-%%{version}-%%{release}
 #Packager: Dirk Nimmich <nimmich@muenster.de>
 Packager: Peter Leinchen (for SFOS) <peterleinchen@t-online.de>
@@ -43,7 +43,7 @@ and system man pages for the tin news reader.
 
 
 %prep
-%setup -q -b 1
+%setup -q -a 1
 ## moved to build
 ##CFLAGS="$RPM_OPT_FLAGS" ./configure...
 
@@ -92,7 +92,7 @@ LDFLAGS="%{optflags}" \
 %make_install
 make DESTDIR=%{buildroot} install_sysdefs
 mkdir -p %{buildroot}/%{faqdir}
-cp ../%{name}-%{version}/faq/* %{buildroot}/%{faqdir}/
+cp %{name}-%{srcversion}/faq/* %{buildroot}/%{faqdir}/
 
 
 %files
