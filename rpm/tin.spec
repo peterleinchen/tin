@@ -1,7 +1,7 @@
 Name: tin
 Summary: An easy-to-use USENET news reader
 Version: 2.6.5
-%define srcVersion 2.6.5
+%define srcversion 2.6.5
 Release: 1
 License: BSD
 Group: Applications/News
