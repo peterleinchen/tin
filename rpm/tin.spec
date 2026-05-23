@@ -6,7 +6,7 @@ Release: 1
 License: BSD
 Group: Applications/News
 Source0: ftp://ftp.tin.org/pub/news/clients/tin/v2.6/%{name}-%{srcversion}.tar.bz2
-Source1: https://github.com/peterleinchen/tin.git
+Source1: %{name}-%{version}.tar.bz2
 ## BuildRoot: %%{name}-%%{version}-%%{release}
 #Packager: Dirk Nimmich <nimmich@muenster.de>
 Packager: Peter Leinchen (for SFOS) <peterleinchen@t-online.de>
@@ -92,7 +92,7 @@ LDFLAGS="%{optflags}" \
 %make_install
 make DESTDIR=%{buildroot} install_sysdefs
 mkdir -p %{buildroot}/%{faqdir}
-cp faq/* %{buildroot}/%{faqdir}/
+cp ../%{name}-%{version}/faq/* %{buildroot}/%{faqdir}/
 
 
 %files
